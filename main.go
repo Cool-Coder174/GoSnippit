@@ -13,6 +13,20 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// add snippetView handler function
+func snippetView(write http.ResponseWriter, read *http.Request) {
+
+	write.Write([]byte("Display a specific SNipbox"))
+
+}
+
+// add a snippetCreate handler function
+func snippetCreate(write http.ResponseWriter, read *http.Request) {
+
+	write.Write([]byte("Create new Snippet"))
+
+}
+
 func main() {
 
 	// use the http.newServerMux() function to initialize a new server mux
