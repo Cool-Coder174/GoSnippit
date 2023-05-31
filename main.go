@@ -25,17 +25,17 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// add a snippit view handler
-func snippitView(w http.ResponseWriter, r *http.Request) {
+// add snippetView handler function
+func snippetView(write http.ResponseWriter, read *http.Request) {
 
-	w.Write([]byte("Hello from snippet"))
+	write.Write([]byte("Display a specific SNipbox"))
 
 }
 
-// add a sippet create handler
-func snippetCreate(w http.ResponseWriter, r *http.Request) {
+// add a snippetCreate handler function
+func snippetCreate(write http.ResponseWriter, read *http.Request) {
 
-	w.Write([]byte("Display a specific snippet..."))
+	write.Write([]byte("Create new Snippet"))
 
 }
 
