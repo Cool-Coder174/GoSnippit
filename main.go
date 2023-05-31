@@ -9,7 +9,33 @@ import (
 
 func home(w http.ResponseWriter, r *http.Request) {
 
+	// Check if the current request URL path exactly matches
+	// the http.NotFound() functiom will send a 404 response to the client
+	// then we return from the handler. If we don't return from the handler
+	// if we do not return the handler then the code will keep exicuting and write the "Hello from snippet..." message
+
+	if r.URL.Path != "/" {
+
+		http.NotFound(w, r)
+		return
+
+	}
+
 	w.Write([]byte("Hello from snippetbox"))
+
+}
+
+// add a snippit view handler
+func snippitView(w http.ResponseWriter, r *http.Request) {
+
+	w.Write([]byte("Hello from snippet"))
+
+}
+
+// add a sippet create handler
+func snippetCreate(w http.ResponseWriter, r *http.Request) {
+
+	w.Write([]byte("Display a specific snippet..."))
 
 }
 
@@ -20,6 +46,8 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", home)
+	mux.HandleFunc("/snippet/view", snippitView)
+	mux.HandleFunc("/snippet/create", snippetCreate)
 
 	// using the http.ListenandServe() function to start a new web server. We will pass in two paramaters.
 	// The TCP network address to listen on (in this case ":4000") snf the servermux we just created.
@@ -29,4 +57,5 @@ func main() {
 	log.Println("Starting server on :4000")
 	err := http.ListenAndServe(":4000", mux)
 	log.Fatal(err)
+
 }
