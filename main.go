@@ -35,6 +35,29 @@ func snippetView(write http.ResponseWriter, read *http.Request) {
 // add a snippetCreate handler function
 func snippetCreate(write http.ResponseWriter, read *http.Request) {
 
+	// Use r.method to check wether request is using POST or not
+	if read.Method != "POST" {
+
+		// Use the Header.Set() function to add an "Allow: POST" header to the response header map.
+		// The first parameter is the header name and the second parameter is the header value.
+		write.Header().Set("Allow", " POST")
+
+		// If POST is not used, use the w.WriteHeader() function to send a 405 status
+		// code and use the w.Write() method to wrte a "method not allowed" response body.
+		//We then return from the function so that the subsequent code is not excecuted.
+		// write.WriteHeader(405)
+		// write.Write([]byte("Method not Allowed"))
+		// using the http.Error() function will run BOTH .WriteHeader() and .Write()
+		// FORMAT: http.Error('var name for httpResponseWriter' , 'Desired text', status)
+		// The functions are the same the only differance is that since we are passing our http.ResponseWriter to another function,
+		// We are also sending a a response to the user for us.
+		// also use http.'Status name" to avoid using literals.
+		http.Error(write, "Method Not Allowed", http.StatusMethodNotAllowed)
+
+		return
+
+	}
+
 	write.Write([]byte("Create new Snippet"))
 
 }
@@ -46,7 +69,7 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", home)
-	mux.HandleFunc("/snippet/view", snippitView)
+	mux.HandleFunc("/snippet/view", snippetView)
 	mux.HandleFunc("/snippet/create", snippetCreate)
 
 	// using the http.ListenandServe() function to start a new web server. We will pass in two paramaters.
